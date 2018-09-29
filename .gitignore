@@ -1,0 +1,6 @@
+#  Libraries
+/env
+
+#msc 
+/.vscode
+/__pycache__
