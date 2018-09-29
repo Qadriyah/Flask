@@ -3,26 +3,26 @@ import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 
-class Config:
+class Config(object):
     """Common configurations"""
-    DEBUG = True,
-    TESTING = False,
+    DEBUG = True
+    TESTING = False
     CSRF_ENABLED = True
     SECRET_KEY: "mukunguB"
-    SQLALCHEMY_DATABSE_URI = os.environ["DATABASE_URI"]
+    SQLALCHEMY_DATABASE_URI = os.environ["DATABASE_URL"]
 
 
-class DevelopmentConfig:
+class DevelopmentConfig(Config):
     """Development configurations"""
-    DEVELOPMENT = True,
+    DEVELOPMENT = True
     DEBUG = True
 
 
-class TestingConfig:
+class TestingConfig(Config):
     """Testing configurations"""
     TESTING = True
 
 
-class ProductionConfig:
+class ProductionConfig(Config):
     """Production configurations"""
     DEBUG = False
