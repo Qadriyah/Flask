@@ -16,6 +16,3 @@ script:
 
 after_success:
   - coveralls
-
-after_script:
-  - codeclimate-test-reporter --file .coveragerc
