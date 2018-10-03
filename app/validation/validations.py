@@ -28,35 +28,24 @@ class Validator:
             True if there were any errors, False otherwise
         """
         errors = {}
+        regex = r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+        email_regex = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
         #  validate name
         if not request_data["name"]:
             errors.update({"name": "Name is required"})
 
         #  validate email
-        if not request_data["email"]:
-            errors.update({"email": "Email is required"})
+        if not request_data["email"] or not re.match(email_regex, request_data["email"]):
+            errors.update({"email": "Your email is invalid"})
 
         #  validate password
-        if not request_data["password"]:
-            errors.update({"password": "Password is required"})
-
-        #  validate password2
-        if not request_data["password2"]:
-            errors.update({"password": "Password2 is required"})
+        if not request_data["password"] or not re.match(regex, request_data["password"]):
+            errors.update(
+                {"password": "Your password should be at least 8 characters, contain a lowercase letter, uppercase letter, a digit and a character"})
 
         #  check if passwords match
         if request_data["password"] != request_data["password2"]:
             errors.update({"mismatch": "Your passwords do not match"})
-
-        #  Check if the password meets the standards
-        if not re.match(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$", request_data["password"]):
-            errors.update(
-                {"weak_pass": "Your password should be at least 8 characters, contain a lowercase letter, uppercase letter, a digit and a character"})
-
-        # validate email format
-        if not re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)",
-                        request_data["email"]):
-            errors.update({"invalid_email": "Your email is invalid"})
 
         return {
             "errors": errors,
