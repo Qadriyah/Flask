@@ -1,14 +1,14 @@
-from flask import request, render_template, jsonify, Response
+from flask import request, jsonify
 import json
 
 #  import account blueprint
 from . import account
-#  import account model
-from app.models import account_model
+#  import account data access object
+from . import dao
 #  import validations
 from app.validation import validations
 
-account_db = account_model.Account()
+data_access_obj = dao.Account()
 validator = validations.Validator()
 
 
@@ -18,7 +18,7 @@ def add_account():
         result = validator.register_validation(request.form)
         if not result["is_true"]:
             return jsonify(result["errors"]), 400
-        return 200
+        return data_access_obj.add_account(request.form)
 
 
 def login_user(self, name, password):

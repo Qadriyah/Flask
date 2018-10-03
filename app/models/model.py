@@ -13,11 +13,11 @@ class User(db.Model):
     email = db.Column(db.String(255))
     password = db.Column(db.String(255))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    todos = relationship("Todo", back_populates="users",
-                         cascade="all, delete, delete-orphan")
+    todo = relationship("Todo", back_populates="user",
+                        cascade="all, delete, delete-orphan")
 
     def __repr__(self):
-        return "<id {}>".format(self.id)
+        return "<User(id={}, name={}, email={})>".format(self.id, self.name, self.email)
 
 
 class Todo(db.Model):
@@ -30,10 +30,11 @@ class Todo(db.Model):
     status = db.Column(db.String(20))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
-    user = relationship("User", back_populates="todos")
+    user = relationship("User", back_populates="todo")
+    todoitem = relationship("TodoItem", back_populates="todo")
 
     def __repr__(self):
-        return "<id {}>".format(self.id)
+        return "<Todo(id={}, name={}, status={}, user_id={})>".format(self.id, self.name, self.status, self.user_id)
 
 
 class TodoItem(db.Model):
@@ -48,7 +49,7 @@ class TodoItem(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     due_at = db.Column(db.Date)
     todo_id = db.Column(db.Integer, db.ForeignKey("todos.id"))
-    todo = relationship("Todo", back_populates="todoitems")
+    todo = relationship("Todo", back_populates="todoitem")
 
     def __repr__(self):
-        return "<id {}>".format(self.id)
+        return "<TodoItem(id={}, name={}, description={}, status={}, due_at={}, todo_id={})>".format(self.id, self.name, self.description, self.status, self.due_at, self.todo_id)
