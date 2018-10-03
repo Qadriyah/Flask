@@ -12,7 +12,10 @@ class Validator:
         Returns:
             bool: True for empty, False otherwise
         """
-        if value == None or value is None or (type(value) == dict and len(value) == 0) or (type(value) == str and len(value.strip()) == 0):
+        none = value == None or value is None
+        dict_len = type(value) == dict and len(value) == 0
+        str_len = type(value) == str and len(value.strip()) == 0
+        if none or dict_len or str_len:
             return True
         return False
 
