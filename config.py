@@ -26,3 +26,10 @@ class TestingConfig(Config):
 class ProductionConfig(Config):
     """Production configurations"""
     DEBUG = False
+
+
+app_settings = {
+    "development": "config.DevelopmentConfig",
+    "testing": "config.TestingConfig",
+    "production": "config.ProductionConfig"
+}
