@@ -4,3 +4,9 @@
 #msc 
 /.vscode
 /__pycache__
+/migrations
+/app/__pycache__
+/app/accounts/__pycache__
+/app/models/__pycache__
+/app/tasks/__pycache__
+app/validation/__pycache__

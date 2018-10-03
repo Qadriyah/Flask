@@ -32,13 +32,14 @@ class Validator:
         """
         errors = {}
         regex = r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
-        email_regex = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
+        #  email_regex = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
         #  validate name
         if not request_data["name"]:
             errors.update({"name": "Name is required"})
 
         #  validate email
-        if not request_data["email"] or not re.match(email_regex, request_data["email"]):
+        if not request_data["email"] or\
+                not re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", request_data["email"]):
             errors.update({"email": "Your email is invalid"})
 
         #  validate password
