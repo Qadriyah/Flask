@@ -66,6 +66,7 @@ class Validator:
         if not password or not re.match(self.regex, password):
             return False
         return True
+<<<<<<< HEAD:app/validation/validations.py
 
     def login_input_validation(self, request_data):
         errors = {}
@@ -77,3 +78,5 @@ class Validator:
             "errors": errors,
             "is_true": self.is_empty(errors)
         }
+=======
+>>>>>>> 5e6499fba209c624e9ac735df027913d28081dee:app/validation/register_validations.py
