@@ -48,5 +48,5 @@ class Account:
             self.status_code = 500
         return jsonify(response), self.status_code
 
-    def login_user(self, name, password):
-        pass
+    def login_user(self, email, password):
+        user = self.session.query(User).filter(User.email == "{}".format(email))

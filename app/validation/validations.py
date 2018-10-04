@@ -3,6 +3,9 @@ import re
 
 class Validator:
 
+    def __init__(self):
+        self.regex = r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+
     def is_empty(self, value):
         """Checks if an object is empty
 
@@ -19,9 +22,9 @@ class Validator:
             return True
         return False
 
-    def register_validation(self, request_data):
+    def register_input_validation(self, request_data):
         """
-        Validates input data for the registration form
+        Validates input data from the registration form
 
         Args:
             request_data(object): Object that holds form data
@@ -31,25 +34,44 @@ class Validator:
             True if there were any errors, False otherwise
         """
         errors = {}
-        regex = r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
-        #  email_regex = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
         #  validate name
         if not request_data["name"]:
             errors.update({"name": "Name is required"})
 
         #  validate email
-        if not request_data["email"] or\
-                not re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", request_data["email"]):
-            errors.update({"email": "Your email is invalid"})
+        if not self.validate_email(request_data["email"]):
+            errors.update({"email": "Your email address is invalid"})
 
         #  validate password
-        if not request_data["password"] or not re.match(regex, request_data["password"]):
+        if not self.validate_password(request_data["password"]):
             errors.update(
                 {"password": "Your password should be at least 8 characters, contain a lowercase letter, uppercase letter, a digit and a character"})
 
         #  check if passwords match
         if request_data["password"] != request_data["password2"]:
             errors.update({"mismatch": "Your passwords do not match"})
+
+        return {
+            "errors": errors,
+            "is_true": self.is_empty(errors)
+        }
+
+    def validate_email(self, email):
+        if not email or\
+                not re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", email):
+            return False
+        return True
+
+    def validate_password(self, password):
+        if not password or not re.match(self.regex, password):
+            return False
+        return True
+
+    def login_input_validation(self, request_data):
+        errors = {}
+        if not self.validate_email(request_data["email"]) or\
+                not self.validate_password(request_data["password"]):
+            errors.update({"login": "Wrong email or password"})
 
         return {
             "errors": errors,
