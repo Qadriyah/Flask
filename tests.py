@@ -1,12 +1,10 @@
 from unittest import TestCase
-from app.validation import register_validations
-from app.validation import login_validations
+from app.validation import validations
 
 
 class TestValidations(TestCase):
     def setUp(self):
-        self.validator = register_validations.Validator()
-        self.login_validator = login_validations.LoginValidator()
+        self.validator = validations.Validator()
         self.data = {
             "name": "Sekitoleko Baker",
             "email": "becks@gmail.com",
@@ -15,7 +13,7 @@ class TestValidations(TestCase):
         }
 
     def test_validator_obj(self):
-        self.assertIsInstance(self.validator, register_validations.Validator)
+        self.assertIsInstance(self.validator, validations.Validator)
 
     def test_is_empty(self):
         self.assertFalse(self.validator.is_empty(self.data))
@@ -35,11 +33,7 @@ class TestValidations(TestCase):
 
     def test_login_input_validation(self):
         self.assertTrue(
-<<<<<<< HEAD
             self.validator.login_input_validation(self.data)["is_true"])
-=======
-            self.login_validator.login_input_validation(self.data)["is_true"])
->>>>>>> 5e6499fba209c624e9ac735df027913d28081dee
 
 
 class TestModels(TestCase):
