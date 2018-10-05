@@ -23,9 +23,9 @@ def add_account():
 
 @account.route("/account/login", methods=["POST"])
 def login_user():
-
     if request.method == "POST":
+        #  Validate user input
         result = validator.login_input_validation(request.form)
         if not result["is_true"]:
             return jsonify(result["errors"]), 400
-        return "Good"
+        return data_access_obj.login_user(request.form)
