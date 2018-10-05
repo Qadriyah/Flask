@@ -11,6 +11,9 @@ addons:
 env:
   global:
     - PGPORT=5433
+    - APP_ENV=testing
+    - DATABASE_URL='postgresql+psycopg2://becks:snOOkg@localhost/mydb'
+    - JWT_SECRET_KEY='mukungumayanja'
 
 #  command to install dependences
 install:
@@ -21,8 +24,8 @@ services:
 
 before-script:
   - codeclimate-test-report before-build
-  - psql -c 'create database tododb;' -U postgres
-  - cp config/database.yml.travis config/database.yml
+  - psql -c 'create database mydb;' -U postgres
+  - psql -c "create user becks with password 'snOOkg';" -U postgres
 
 #  command to run tests
 script:
