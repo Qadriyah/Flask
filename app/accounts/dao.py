@@ -14,7 +14,7 @@ from app import jwt
 class Account:
 
     def __init__(self):
-        engine = create_engine(os.environ["DATABASE_URL"])
+        engine = create_engine(os.environ.get("DATABASE_URL"))
         #  Initialize a session class
         Session = sessionmaker()
         #  Connect to the session
