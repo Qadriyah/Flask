@@ -49,7 +49,7 @@ class Account:
         except SQLAlchemyError as err:
             response.update({"db_error": err})
             self.status_code = 500
-        return response, self.status_code
+        return jsonify(response), self.status_code
 
     def login_user(self, request_data):
         response = {}

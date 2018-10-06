@@ -48,7 +48,7 @@ class TestDataAcess(TestCase):
 
     def test_add_account(self):
         with app.app_context():
-            self.assertEqual(self.dao_obj.add_account(data)[0], 200)
+            self.assertEqual(self.dao_obj.add_account(data)[1], 200)
 
 
 class TestAccountRoutes(TestCase):

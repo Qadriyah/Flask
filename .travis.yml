@@ -12,7 +12,7 @@ env:
   global:
     - PGPORT=5433
     - APP_ENV=testing
-    - DATABASE_URL='postgresql+psycopg2://becks:snOOkg@localhost:5433/mydb'
+    - DATABASE_URL='postgresql+psycopg2://postgres:@localhost:5433/mydb'
     - JWT_SECRET_KEY='mukungumayanja'
 
 #  command to install dependences
