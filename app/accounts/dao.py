@@ -46,8 +46,8 @@ class Account:
                 response.update({"msg": "User already exists"})
                 self.status_code = 401
 
-        except:
-            response.update({"db_error": "Unable to add user to the database"})
+        except SQLAlchemyError as err:
+            response.update({"db_error": err})
             self.status_code = 500
         return jsonify(response), self.status_code
 
