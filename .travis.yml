@@ -26,6 +26,9 @@ before-script:
   - codeclimate-test-report before-build
   - psql -c 'create database mydb;' -U postgres
   - psql -c "create user becks with password 'snOOkg';" -U postgres
+  - python manage.py db init
+  - python manage.py db migrate
+  - python manage.py db upgrade
 
 #  command to run tests
 script:
