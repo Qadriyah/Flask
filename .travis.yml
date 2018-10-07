@@ -11,10 +11,11 @@ addons:
 env:
   global:
     - PGPORT=5432
+    - PGPASSWORD="snOOkg"
+    - PGHOST="localhost"
     - APP_ENV=testing
     - DATABASE_URL="postgresql+psycopg2://postgres:snOOkg@localhost:5432/tododb"
     - JWT_SECRET_KEY="mukungumayanja"
-    - PGPASSWORD="snOOkg"
 
 #  command to install dependences
 install:
