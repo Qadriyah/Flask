@@ -22,7 +22,7 @@ services:
   - postgresql
 
 before_script:
-  - coverage run
+  - coverage run run.py
   - psql -c "create database tododb;" -U postgres
   #  - psql -c "create user becks with password 'snOOkg';" -U postgres
   - python manage.py db init
@@ -32,7 +32,7 @@ before_script:
 #  command to run tests
 script:
   - nosetests --with-coverage --cover-tests
-  - coverage report
+  - coverage report -m
 
 after_success:
   - coveralls
