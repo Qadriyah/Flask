@@ -24,7 +24,6 @@ services:
   - postgresql
 
 before_script:
-  - codeclimate-test-reporter before-build
   - psql -c "create database tododb;" -U postgres
   - python manage.py db init
   - python manage.py db migrate
