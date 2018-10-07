@@ -1,4 +1,5 @@
 from unittest import TestCase
+import json
 
 from app.validation import validations
 from app.accounts import dao
@@ -6,9 +7,9 @@ from app import app
 
 data = {
     "name": "Sekitoleko Baker",
-    "email": "becks@gmail.com",
-    "password": "mukunguB@01",
-    "password2": "mukunguB@01"
+    "email": "henry@gmail.com",
+    "password": "mukunguB@3",
+    "password2": "mukunguB@3"
 }
 
 
@@ -46,9 +47,22 @@ class TestDataAcess(TestCase):
     def setUp(self):
         self.dao_obj = dao.Account()
 
+    def test_is_user_exists(self):
+        with app.app_context():
+            self.assertTrue(self.dao_obj.is_user_exist(data["email"])[1])
+
     def test_add_account(self):
         with app.app_context():
-            self.assertEqual(self.dao_obj.add_account(data)[1], 200)
+            if self.dao_obj.is_user_exist(data["email"])[1]:
+                self.assertEqual(json.loads(self.dao_obj.add_account(
+                    data)[0].get_data().decode("utf-8"))["msg"], "User already exists")
+            else:
+                self.assertEqual(json.loads(self.dao_obj.add_account(
+                    data)[0].get_data().decode("utf-8"))["msg"], "User added successfully")
+
+    def test_login_user(self):
+        with app.app_context():
+            self.assertEqual(self.dao_obj.login_user(data)[1], 200)
 
 
 class TestAccountRoutes(TestCase):

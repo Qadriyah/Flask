@@ -34,14 +34,13 @@ class Account:
                 email=request_data["email"],
                 password=password_hash.decode("utf-8")
             )
-            result = self.session.query(User).filter(
-                User.email == "{}".format(request_data["email"])).first()
             #  Check if user already exists
-            if not result:
+            if not self.is_user_exist(request_data["email"])[1]:
                 self.session.add(new_user)
                 self.session.commit()
                 self.session.close()
                 response.update({"msg": "User added successfully"})
+                self.status_code = 200
             else:
                 response.update({"msg": "User already exists"})
                 self.status_code = 401
@@ -53,21 +52,20 @@ class Account:
 
     def login_user(self, request_data):
         response = {}
-        result = self.session.query(User).filter(
-            User.email == "{}".format(request_data["email"])).first()
         #  Check if user exists
-        if not result:
-            response.update({"error": "Wrong email or password"})
+        result = self.is_user_exist(request_data["email"])
+        if not result[1]:
+            response.update({"errors": "Wrong email or password"})
             self.status_code = 401
         else:
-            #  Check if password provided matches on in the database
+            #  Check if password provided matches one in the database
             if bcrypt.check_password_hash(
-                    result.password, request_data["password"]):
+                    result[0].password, request_data["password"]):
                 #  Create jwt payload
                 jwt_payload = {
-                    "id": result.id,
-                    "name": result.name,
-                    "email": result.email
+                    "id": result[0].id,
+                    "name": result[0].name,
+                    "email": result[0].email
                 }
                 #  Create token
                 token = create_access_token(
@@ -76,8 +74,17 @@ class Account:
                     "success": True,
                     "token": "Bearer {}".format(token)
                 })
+                self.status_code = 200
             else:
                 response.update({"error": "Wrong email or password"})
                 self.status_code = 401
 
         return jsonify(response), self.status_code
+
+    def is_user_exist(self, email):
+        result = self.session.query(User).filter(
+            User.email == "{}".format(email)).first()
+
+        if result:
+            return result, True
+        return "", False
