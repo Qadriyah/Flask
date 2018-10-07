@@ -22,7 +22,7 @@ install:
 services:
   - postgresql
 
-before-script:
+before_script:
   - codeclimate-test-report before-build
   - psql -c 'create database mydb;' -U postgres
   - psql -c "create user becks with password 'snOOkg';" -U postgres
