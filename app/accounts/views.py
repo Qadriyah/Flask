@@ -25,7 +25,6 @@ def add_account():
 def login_user():
     if request.method == "POST":
         #  Validate user input
-        result = validator.login_input_validation(request.form)
-        if not result["is_true"]:
+        if not validator.login_input_validation(request.form)["is_true"]:
             return jsonify(result["errors"]), 400
         return data_access_obj.login_user(request.form)

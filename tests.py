@@ -53,10 +53,7 @@ class TestDataAcess(TestCase):
 
     def test_add_account(self):
         with app.app_context():
-            if self.dao_obj.is_user_exist(data["email"])[1]:
-                self.assertEqual(json.loads(self.dao_obj.add_account(
-                    data)[0].get_data().decode("utf-8"))["msg"], "User already exists")
-            else:
+            if not self.dao_obj.is_user_exist(data["email"])[1]:
                 self.assertEqual(json.loads(self.dao_obj.add_account(
                     data)[0].get_data().decode("utf-8"))["msg"], "User added successfully")
 
