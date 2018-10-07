@@ -22,7 +22,7 @@ services:
   - postgresql
 
 before_script:
-  - codeclimate-test-reportor before-build
+  - ./cc-test-reporter before-build
   - psql -c "create database tododb;" -U postgres
   #  - psql -c "create user becks with password 'snOOkg';" -U postgres
   - python manage.py db init
