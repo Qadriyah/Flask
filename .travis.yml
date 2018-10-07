@@ -9,7 +9,7 @@ env:
   global:
     - PGPORT=5432
     - PGPASSWORD="snOOkg"
-    - PGHOST="127.0.0.1"
+    - PGHOST="localhost"
     - APP_ENV=testing
     - DATABASE_URL="postgresql+psycopg2://postgres:snOOkg@localhost:5432/tododb"
     - JWT_SECRET_KEY="mukungumayanja"
@@ -22,7 +22,7 @@ services:
   - postgresql
 
 before_script:
-  #  - codeclimate-test-report before-build
+  - codeclimate-test-reportor before-build
   - psql -c "create database tododb;" -U postgres
   #  - psql -c "create user becks with password 'snOOkg';" -U postgres
   - python manage.py db init
