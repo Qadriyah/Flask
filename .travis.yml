@@ -13,7 +13,6 @@ env:
     - APP_ENV=testing
     - DATABASE_URL="postgresql+psycopg2://postgres:snOOkg@localhost:5432/tododb"
     - JWT_SECRET_KEY="mukungumayanja"
-    - CODECOV_TOKEN="00466ca8-0ab3-4d50-bca3-8609f7c5fa79"
 
 #  command to install dependences
 install:
