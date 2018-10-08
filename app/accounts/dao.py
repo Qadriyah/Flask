@@ -24,6 +24,15 @@ class Account:
         self.status_code = 200
 
     def add_account(self, request_data):
+        """
+        Registers a new user to the database
+
+        Args:
+            request_data(object): request object holding form data
+
+        Returns:
+            tuple: With a response message and a status code
+        """
         response = {}
         #  Hash password
         password_hash = bcrypt.generate_password_hash(
@@ -51,6 +60,15 @@ class Account:
         return jsonify(response), self.status_code
 
     def login_user(self, request_data):
+        """
+        Authenticates a user and returns a JWT token back to the client if successful
+
+        Args:
+            request_data(object): request object holding form data
+
+        Returns:
+            tuple: With a response object (JWT token for success, error message otherwise) and a status code
+        """
         response = {}
         #  Check if user exists
         result = self.is_user_exist(request_data["email"])
@@ -82,6 +100,15 @@ class Account:
         return jsonify(response), self.status_code
 
     def is_user_exist(self, email):
+        """
+        Checks if a user exists in the database
+
+        Args:
+            email(str): User's email address
+
+        Returns:
+            tuple: (User and True) if a user exists ("" and False) otherwise
+        """
         result = self.session.query(User).filter(
             User.email == "{}".format(email)).first()
 

@@ -14,6 +14,10 @@ validator = validations.Validator()
 
 @account.route("/account/new_account", methods=["POST"])
 def add_account():
+    """
+    This creates an account on the system that authorizes the 
+    user to access system resources
+    """
     if request.method == "POST":
         result = validator.register_input_validation(request.form)
         if not result["is_true"]:
@@ -23,6 +27,10 @@ def add_account():
 
 @account.route("/account/login", methods=["POST"])
 def login_user():
+    """
+    This authenticates the user and returns a JWT token for making
+    subsequent requests
+    """
     if request.method == "POST":
         #  Validate user input
         if not validator.login_input_validation(request.form)["is_true"]:
